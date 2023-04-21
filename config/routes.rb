@@ -13,4 +13,5 @@ Rails.application.routes.draw do
     end
   end
   root "hello#index"
+  resources :products, only: [:index, :show]
 end
