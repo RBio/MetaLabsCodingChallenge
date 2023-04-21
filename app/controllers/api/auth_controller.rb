@@ -1,7 +1,7 @@
 class Api::AuthController < ActionController::API
   def login
     user = User.find_by_email(login_params[:email])
-    if user&.authenticate(login_params[:password])
+    if user&.valid_password?(login_params[:password])
       token = JsonWebToken.encode(user_id: user.id)
       render json: { token: token }, status: :ok
     else

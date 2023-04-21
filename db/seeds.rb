@@ -12,9 +12,9 @@ end
 
 user_purchase = Purchase.create(user: user)
 
-PurcahseItem.create(purchase: user_purchase, name: products[0].name, description: products[0].description,
+PurchaseItem.create(purchase: user_purchase, name: products[0].name, description: products[0].description,
                     price: products[0].price, quantity: 1)
-PurcahseItem.create(purchase: user_purchase, name: products[2].name, description: products[2].description,
+PurchaseItem.create(purchase: user_purchase, name: products[2].name, description: products[2].description,
                     price: products[2].price, quantity: 1)
-PurcahseItem.create(purchase: user_purchase, name: products_without_stock[1].name, description: products_without_stock[1].description,
+PurchaseItem.create(purchase: user_purchase, name: products_without_stock[1].name, description: products_without_stock[1].description,
                     price: products_without_stock[1].price, quantity: 1)

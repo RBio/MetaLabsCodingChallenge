@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   namespace :api do
     post '/auth/login', to: 'auth#login'
     resources :products, only: [:index, :show]
