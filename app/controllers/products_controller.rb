@@ -4,7 +4,9 @@ class ProductsController < ApplicationController
   end
 
   def show
-    @product = Product.find(show_permitted_params[:id]) 
+    product_id = show_permitted_params[:id].to_i
+    @product = Product.find(product_id) 
+    @product_in_cart = current_user.cart.products.exists?(id: product_id)
   end
 
   private

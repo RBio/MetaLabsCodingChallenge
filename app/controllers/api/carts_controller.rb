@@ -7,11 +7,13 @@ class Api::CartsController < Api::ApiController
   end
 
   def add_product
-    render json: CartService.add_product(@current_user.cart, product_permitted_params[:product_id])
+    CartsService.add_product(@current_user.cart, product_permitted_params[:product_id].to_i)
+    head :no_content
   end
 
   def remove_product
-    render json: CartService.remove_product(@current_user.cart, product_permitted_params[:product_id])
+    CartsService.remove_product(@current_user.cart, product_permitted_params[:product_id].to_i)
+    head :no_content
   end
 
   private

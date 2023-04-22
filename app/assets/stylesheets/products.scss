@@ -1,0 +1,29 @@
+.card {
+  margin-top: 32px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  max-width: 75%;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0 solid transparent;
+  border-radius: 0;
+}
+
+#descrption-text {
+  color: hsl(224, 8%, 46%);
+}
+
+#cart-button {
+  margin-top: 12px;
+}
+
+#stock-text {
+  color: hsl(225, 9%, 27%);
+}
+
+.container {
+  align-items: center;
+}

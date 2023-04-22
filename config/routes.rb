@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   namespace :api do
     post '/auth/login', to: 'auth#login'
     resources :products, only: [:index, :show]
-    scope '/users/:user_id' do
+    scope '/user/' do
       resource :cart, only: [:show] do
         post :add_product
         post :remove_product
@@ -14,4 +14,10 @@ Rails.application.routes.draw do
   end
   root "hello#index"
   resources :products, only: [:index, :show]
+  resources :carts, only: [:show] do
+    collection do
+      post :add_product
+      post :remove_product
+    end
+  end
 end

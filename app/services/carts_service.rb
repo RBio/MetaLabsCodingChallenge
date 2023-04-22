@@ -1,4 +1,4 @@
-class CartService
+class CartsService
   class << self
     def add_product(cart, product_id)
       product = Product.find(product_id)
@@ -10,7 +10,6 @@ class CartService
     
     def remove_product(cart, product_id)
       cart.products.delete(product_id)
-      cart
     end
   end
 end
