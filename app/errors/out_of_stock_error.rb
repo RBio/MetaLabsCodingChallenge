@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OutOfStockError < StandardError
   attr_reader :product_names
 
@@ -6,6 +8,6 @@ class OutOfStockError < StandardError
   end
 
   def message
-    "The #{('product'.pluralize(product_names.length))} '#{product_names.join(', ')}' ran out of stock"
+    "The #{'product'.pluralize(product_names.length)} '#{product_names.join(', ')}' ran out of stock"
   end
 end

@@ -7,8 +7,8 @@
           <h4 class="box-title mt-5">Product description</h4>
             <p id="descrption-text"><%= @product.description %></p>
             <div class="row">
-              <h4 class="col-8">$<%= @product.price %></h2>
-              <h4 id="stock-text" class="col-4">Stock: <%= @product.stock %></h2>
+              <h4 class="col-8">$<%= @product.price %></h4>
+              <h4 id="stock-text" class="col-4">Stock: <%= @product.stock %></h4>
             </div>
             <% if @product_in_cart %>
               <%= button_to "Remove from cart", remove_product_carts_path(product_id: @product.id), class: 'btn btn-danger btn-rounded text-white col-4' %>

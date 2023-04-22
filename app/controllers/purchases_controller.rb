@@ -1,7 +1,8 @@
-class PurchasesController < ApplicationController  
+# frozen_string_literal: true
+
+class PurchasesController < ApplicationController
   def index
-    @purchases = Purchase.where(user: current_user).includes(:purchase_items)
-                         .order(created_at: :desc)
+    @purchases = PurchasesService.user_purchases(current_user)
   end
 
   def create
@@ -9,4 +10,3 @@ class PurchasesController < ApplicationController
     redirect_to purchases_path
   end
 end
-        

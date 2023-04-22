@@ -1,17 +1,21 @@
-class Api::ProductsController < Api::ApiController
-  before_action :authorize_request
+# frozen_string_literal: true
 
-  def index
-    render json: Product.all, each_serializer: ProductSerializer
-  end
+module Api
+  class ProductsController < Api::ApiController
+    before_action :authorize_request
 
-  def show
-    render json: Product.find(show_permitted_params[:id].to_i)
-  end
+    def index
+      render json: Product.all, each_serializer: ProductSerializer
+    end
 
-  private
+    def show
+      render json: Product.find(show_permitted_params[:id].to_i)
+    end
 
-  def show_permitted_params
-    params.permit(:id)
+    private
+
+    def show_permitted_params
+      params.permit(:id)
+    end
   end
 end

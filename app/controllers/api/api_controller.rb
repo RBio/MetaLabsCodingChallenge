@@ -1,6 +1,9 @@
-class Api::ApiController < ActionController::API 
-    rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
-    
+# frozen_string_literal: true
+
+module Api
+  class ApiController < ActionController::API
+    rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+
     def authorize_request
       authorization_header = request.headers['Authorization']
       encoded_token = authorization_header.split(' ').last if authorization_header
@@ -21,4 +24,5 @@ class Api::ApiController < ActionController::API
     def bad_request(error)
       render json: { error: error.message }, status: :bad_request
     end
+  end
 end

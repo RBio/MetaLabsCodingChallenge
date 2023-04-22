@@ -34,12 +34,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_190628) do
 
   create_table "purchase_items", force: :cascade do |t|
     t.integer "purchase_id"
-    t.string "name"
-    t.text "description"
+    t.integer "product_id"
     t.decimal "price"
     t.integer "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_purchase_items_on_product_id"
     t.index ["purchase_id"], name: "index_purchase_items_on_purchase_id"
   end
 

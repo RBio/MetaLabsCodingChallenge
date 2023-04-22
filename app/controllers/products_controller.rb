@@ -1,11 +1,13 @@
-class ProductsController < ApplicationController  
+# frozen_string_literal: true
+
+class ProductsController < ApplicationController
   def index
     @products = Product.select(:id, :name, :price)
   end
 
   def show
     product_id = show_permitted_params[:id].to_i
-    @product = Product.find(product_id) 
+    @product = Product.find(product_id)
     @product_in_cart = current_user.cart.products.exists?(id: product_id)
   end
 
@@ -15,4 +17,3 @@ class ProductsController < ApplicationController
     params.permit(:id)
   end
 end
-      

@@ -17,11 +17,11 @@
         <tr>
           <th width='60%'>Name</th>
           <th width='20%'>Price</th>
-          <th width='10%'>Quantity</th>
+          <th width='20%'>Quantity</th>
         </tr>
         <% purchase.purchase_items.each do |purchase_item| %>
         <tr>
-          <td data-th="Name: "><%= purchase_item.name %></td>
+          <td data-th="Name: "><%= purchase_item.product.name %></td>
           <td data-th="Price: "><%= purchase_item.price %></td>
           <td data-th="Quantity: "><%= purchase_item.quantity %></td>
         </tr>

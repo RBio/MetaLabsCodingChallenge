@@ -1,6 +1,10 @@
-class CartsController < ApplicationController  
+# frozen_string_literal: true
+
+class CartsController < ApplicationController
   def show
-    @products = current_user.cart.products
+    cart = current_user.cart
+    @products = cart.products
+    @total_price = cart.total_price
   end
 
   def add_product
@@ -19,4 +23,3 @@ class CartsController < ApplicationController
     params.permit(:product_id)
   end
 end
-        

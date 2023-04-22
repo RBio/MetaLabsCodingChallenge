@@ -1,14 +1,17 @@
-class Api::PurchasesController < Api::ApiController
-  before_action :authorize_request
-  rescue_from OutOfStockError, EmptyCartError, :with => :bad_request
+# frozen_string_literal: true
 
-  def index
-    render json: @current_user.purchases, each_serializer: PurchaseSerializer
-  end
+module Api
+  class PurchasesController < Api::ApiController
+    before_action :authorize_request
+    rescue_from OutOfStockError, EmptyCartError, with: :bad_request
 
-  def create
-    purchase = PurchasesService.make_purchase(@current_user)
-    render json: PurchaseSerializer.new(purchase).to_json
+    def index
+      render json: PurchasesService.user_purchases(@current_user), each_serializer: PurchaseSerializer
+    end
+
+    def create
+      purchase = PurchasesService.make_purchase(@current_user)
+      render json: PurchaseSerializer.new(purchase).to_json
+    end
   end
 end
-    

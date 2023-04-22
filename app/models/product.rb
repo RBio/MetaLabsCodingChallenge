@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Product < ApplicationRecord
   validates :price, numericality: { greater_than: 0 }
   validates :stock, numericality: { greater_than_or_equal_to: 0 }
