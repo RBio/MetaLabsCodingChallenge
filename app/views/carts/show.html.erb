@@ -2,32 +2,32 @@
   <h4 class="bold-title">My cart</h4>
   <hr class="separator-section">
 </div>
-<div class="row">
-  <table style="margin-bottom: 60px;" class="table table-striped table-hover">
-    <tr>
-      <th>Name</th>
-      <th>Price</th>
-      <th>Actions</th>
-    </tr>
-    <% @products.each do |product| %>
-    <tr>
-      <td data-th="Name: "><%= product.name %></td>
-      <td data-th="Price: "><%= product.price %></td>
-      <td data-th="Actions: ">
-        <%= link_to(product_path(product.id)) do %>
-          <i class="fa fa-times-circle"  style="color:red" aria-hidden="true"></i>
-        <% end %>
-      </td>
-    </tr>
-    <% end %>
-  </table>
-
-  <% if @products.empty? %>
-    <div class="row">
-      <span>
-        <h4 class="text-center">No products in cart<br>
-      </span>
-    </div>
-  <% end %>
-</div>
-
+<% if @products.empty? %>
+  <div class="row">
+    <span>
+      <h4 class="text-center">No products in cart<br>
+    </span>
+  </div>
+<% else %>
+  <div class="row">
+    <table style="margin-bottom: 60px;" class="table table-striped table-hover">
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Actions</th>
+      </tr>
+      <% @products.each do |product| %>
+      <tr>
+        <td data-th="Name: "><%= product.name %></td>
+        <td data-th="Price: "><%= product.price %></td>
+        <td data-th="Actions: ">
+          <%= link_to remove_product_carts_path(product_id: product.id), method: :post do %>
+            <i class="fa fa-times-circle"  style="color:red" aria-hidden="true"></i>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+    <%= button_to "Purchase", purchases_path, class: 'btn btn-info btn-rounded text-white col-4', hidden: @products.empty? %>
+  </div>
+<% end %>

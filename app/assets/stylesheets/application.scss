@@ -13,6 +13,7 @@
  *= require_tree .
  *= require_self
  *= require products
+ *= require auth
  */
 
 @import "bootstrap";
@@ -21,4 +22,9 @@
 .bold-title {
   font-weight: bold;
   margin-top: 8px;
+}
+
+#sidebar div {
+  position: sticky;
+  top: 0;
 }

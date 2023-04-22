@@ -1,9 +1,9 @@
 class Api::PurchasesController < Api::ApiController
   before_action :authorize_request
-  rescue_from OutOfStockError, :with => :bad_request
+  rescue_from OutOfStockError, EmptyCartError, :with => :bad_request
 
   def index
-    render json: @current_user.purchases
+    render json: @current_user.purchases, each_serializer: PurchaseSerializer
   end
 
   def create

@@ -1,7 +1,10 @@
 class PurchasesService
   class << self
     def make_purchase(user)
-      products = user.cart.products
+      cart = user.cart
+      products = cart.products
+
+      raise EmptyCartError if products.empty?
 
       ActiveRecord::Base.transaction do
         products_out_of_stock = update_product_stocks(products)
@@ -11,6 +14,8 @@ class PurchasesService
         purchase = Purchase.create(user: user)
 
         create_purchase_items(purchase, products)
+
+        cart.products.delete_all
 
         purchase
       end
