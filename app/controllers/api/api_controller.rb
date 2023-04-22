@@ -2,7 +2,7 @@
 
 module Api
   class ApiController < ActionController::API
-    rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+    rescue_from ActiveRecord::RecordNotFound, with: :record_not_found_handler
 
     def authorize_request
       authorization_header = request.headers['Authorization']
@@ -17,11 +17,11 @@ module Api
 
     private
 
-    def record_not_found(error)
+    def record_not_found_handler(error)
       render json: { error: error.message }, status: :not_found
     end
 
-    def bad_request(error)
+    def bad_request_handler(error)
       render json: { error: error.message }, status: :bad_request
     end
   end

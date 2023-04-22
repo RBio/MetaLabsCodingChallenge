@@ -14,5 +14,11 @@ FactoryBot.define do
   end
 
   factory :purchase do
+    user
+  end
+
+  factory :purchase_item do
+    product
+    quantity { 1 }
   end
 end

@@ -8,6 +8,6 @@ class OutOfStockError < StandardError
   end
 
   def message
-    "The #{'product'.pluralize(product_names.length)} '#{product_names.join(', ')}' ran out of stock"
+    "The #{'product'.pluralize(product_names.length)} #{product_names.to_sentence} ran out of stock"
   end
 end

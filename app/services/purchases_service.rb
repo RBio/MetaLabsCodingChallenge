@@ -34,7 +34,7 @@ class PurchasesService
       products_out_of_stock = []
 
       products.each do |product|
-        product.update(stock: product.stock - 1)
+        product.update!(stock: product.stock - 1)
       rescue StandardError
         products_out_of_stock << product.name
       end

@@ -3,7 +3,7 @@
 module Api
   class CartsController < Api::ApiController
     before_action :authorize_request
-    rescue_from AlreadyInCartError, OutOfStockError, with: :bad_request
+    rescue_from AlreadyInCartError, OutOfStockError, with: :bad_request_handler
 
     def show
       render json: CartSerializer.new(@current_user.cart).to_json

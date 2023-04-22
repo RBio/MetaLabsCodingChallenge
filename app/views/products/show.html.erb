@@ -13,7 +13,7 @@
             <% if @product_in_cart %>
               <%= button_to "Remove from cart", remove_product_carts_path(product_id: @product.id), class: 'btn btn-danger btn-rounded text-white col-4' %>
             <% else %>
-              <%= button_to "Add to cart", add_product_carts_path(product_id: @product.id), class: 'btn btn-info btn-rounded text-white col-4', hidden: @product.stock.zero? %>
+              <%= button_to "Add to cart", add_product_carts_path(product_id: @product.id), class: 'btn btn-primary btn-rounded text-white col-4', hidden: @product.stock.zero? %>
             <% end %>
         </div>
       </div>

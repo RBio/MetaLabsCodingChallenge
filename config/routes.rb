@@ -16,7 +16,7 @@ Rails.application.routes.draw do
       resources :purchases, only: %i[index create]
     end
   end
-  root 'hello#index'
+  root 'products#index'
 
   resources :products, only: %i[index show]
 
