@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class ProductSerializer < ActiveModel::Serializer
+class ProductListSerializer < ActiveModel::Serializer
   attributes :name, :price
 end

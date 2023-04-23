@@ -5,7 +5,7 @@ module Api
     before_action :authorize_request
 
     def index
-      render json: Product.all, each_serializer: ProductSerializer
+      render json: Product.all, each_serializer: ProductListSerializer
     end
 
     def show
