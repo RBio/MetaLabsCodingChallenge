@@ -58,9 +58,8 @@ RSpec.describe PurchasesService do
         expect(user.cart.products).to be_empty
 
         updated_products_stock = Product.find(purchase_items.pluck(:product_id)).map(&:stock)
-        expect(updated_products_stock).to eq products_to_purchase_stock.map { |previous_stock|
-                                               previous_stock - 1
-                                             }
+        decreased_products_stock = products_to_purchase_stock.map { |previous_stock| previous_stock - 1 }
+        expect(updated_products_stock).to eq decreased_products_stock
 
         purchase_items.each do |purchase_item|
           expect(purchase.user_id).to eq user.id

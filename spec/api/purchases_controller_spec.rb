@@ -62,9 +62,8 @@ RSpec.describe Api::PurchasesController, type: :request do
 
         products_stock_before_purchase = products.map(&:stock)
         updated_products_stock = Product.find(purchase_items.pluck(:product_id)).map(&:stock)
-        expect(updated_products_stock).to eq products_stock_before_purchase.map { |previous_stock|
-                                               previous_stock - 1
-                                             }
+        decreased_products_stock = products_stock_before_purchase.map { |previous_stock| previous_stock - 1 }
+        expect(updated_products_stock).to eq decreased_products_stock
 
         purchase_items.each do |purchase_item|
           expect(purchase.user_id).to eq user.id
@@ -122,7 +121,7 @@ def formatted_purchases_response(purchases)
     purchase_items_format = purchase.purchase_items.map do |purchase_item|
       { name: purchase_item.product.name, price: purchase_item.price, quantity: purchase_item.quantity }
     end
-    purchase_body = { id: purchase.id, created_at: purchase.created_at,
-                      purchase_items: purchase_items_format }
+    { id: purchase.id, created_at: purchase.created_at,
+      purchase_items: purchase_items_format, total_price: purchase.total_price }
   end
 end
