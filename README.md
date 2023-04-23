@@ -3,6 +3,8 @@
 ## Installation
 
 ```bash
+This project uses Ruby version 3.1.2 and Ruby on Rails version 7.0.4.1
+
 $ bundle install
 $ rake db:create db:migrate
 $ rake db:seed (optional)
