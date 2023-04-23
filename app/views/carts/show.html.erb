@@ -21,6 +21,9 @@
         <td data-th='Name: '><%= product.name %></td>
         <td data-th='Price: '><%= product.price %></td>
         <td data-th='Actions: '>
+          <%= link_to product_path(product.id) do %>
+            <i class="fa fa-eye"></i>
+          <% end %>
           <%= link_to remove_product_carts_path(product_id: product.id), method: :post do %>
             <i class='fa fa-times-circle'  style='color:red' aria-hidden='true'></i>
           <% end %>
@@ -30,7 +33,7 @@
     </table>
     <% if @products.present? %>
       <h2 class="col-6">Total: $<%= @total_price %></h2>
-      <%= button_to 'Purchase', purchases_path, class: 'btn btn-info btn-rounded text-white col-4' %>
+      <%= button_to 'Purchase', purchases_path, class: 'btn btn-primary btn-rounded text-white col-4' %>
     <% end %>
   </div>
 <% end %>

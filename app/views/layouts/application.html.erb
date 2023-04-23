@@ -13,16 +13,16 @@
   </head>
 
   <body>
-    <% if notice %>
-      <p class="alert alert-success"><%= notice %></p>
-    <% end %>
-    <% if alert %>
-      <p class="alert alert-danger"><%= alert %></p>
-    <% end %>
     <div class="container-fluid">
       <div class="row flex-nowrap">
         <%= render partial: 'layouts/sidebar' %>
         <div class="col">
+          <% if notice %>
+            <p class="alert alert-success"><%= notice %></p>
+          <% end %>
+          <% if alert %>
+            <p class="alert alert-danger"><%= alert %></p>
+          <% end %>
           <%= yield %>
         </div>
       </div>

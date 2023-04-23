@@ -48,18 +48,24 @@ RSpec.describe PurchasesService do
         user.cart.products << products
       end
 
-      it "the purchase and purchase items are created successfully, and it empties the user's cart" do
+      it "the purchase and purchase items are created successfully, decreases stock for each product, and it empties the user's cart" do
+        products_to_purchase_stock = products.map(&:stock)
+
         purchase = PurchasesService.make_purchase(user)
         purchase_items = purchase.purchase_items
 
         expect(purchase_items.length).to eq 3
         expect(user.cart.products).to be_empty
 
+        updated_products_stock = Product.find(purchase_items.pluck(:product_id)).map(&:stock)
+        expect(updated_products_stock).to eq products_to_purchase_stock.map { |previous_stock|
+                                               previous_stock - 1
+                                             }
+
         purchase_items.each do |purchase_item|
-          purchased_product = products.find { |product| product.id == purchase_item.product_id }
           expect(purchase.user_id).to eq user.id
           expect(purchase_item.purchase_id).to eq purchase.id
-          expect(purchase_item.price).to eq purchased_product.price
+          expect(purchase_item.price).to eq purchase_item.product.price
         end
       end
     end

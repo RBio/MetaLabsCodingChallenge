@@ -29,7 +29,7 @@ RSpec.describe Api::PurchasesController, type: :request do
 
       it "should return the user's purchases ordered by descending date" do
         expected_body = formatted_purchases_response([purchase2, purchase1]).to_json
-                          
+
         expect(response).to have_http_status(200)
         expect(response.body).to eq expected_body
       end
@@ -54,7 +54,23 @@ RSpec.describe Api::PurchasesController, type: :request do
 
         expect(response).to have_http_status(201)
         expect(response.body).to eq expected_body.to_json
-        expect(user.purchases.where(id: expected_body[:id])).not_to be_empty
+
+        purchase_items = purchase.purchase_items
+
+        expect(purchase_items.length).to eq 3
+        expect(user.cart.reload.products).to be_empty
+
+        products_stock_before_purchase = products.map(&:stock)
+        updated_products_stock = Product.find(purchase_items.pluck(:product_id)).map(&:stock)
+        expect(updated_products_stock).to eq products_stock_before_purchase.map { |previous_stock|
+                                               previous_stock - 1
+                                             }
+
+        purchase_items.each do |purchase_item|
+          expect(purchase.user_id).to eq user.id
+          expect(purchase_item.purchase_id).to eq purchase.id
+          expect(purchase_item.price).to eq purchase_item.product.price
+        end
       end
     end
 
@@ -72,6 +88,9 @@ RSpec.describe Api::PurchasesController, type: :request do
         error_message = "The products #{products_without_stock[0].name} and #{products_without_stock[1].name} ran out of stock"
         expect(response).to have_http_status(400)
         expect(JSON.parse(response.body)['error']).to eq error_message
+
+        expect(Purchase.all).to be_empty
+        expect(PurchaseItem.all).to be_empty
       end
     end
 
@@ -84,6 +103,9 @@ RSpec.describe Api::PurchasesController, type: :request do
       it "should return a 400 error saying that there's no products in cart" do
         expect(response).to have_http_status(400)
         expect(JSON.parse(response.body)['error']).to eq 'There are no products to purchase'
+
+        expect(Purchase.all).to be_empty
+        expect(PurchaseItem.all).to be_empty
       end
     end
   end
@@ -96,7 +118,7 @@ def user_auth_headers(user)
 end
 
 def formatted_purchases_response(purchases)
-  purchases.map do |purchase| 
+  purchases.map do |purchase|
     purchase_items_format = purchase.purchase_items.map do |purchase_item|
       { name: purchase_item.product.name, price: purchase_item.price, quantity: purchase_item.quantity }
     end
