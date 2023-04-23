@@ -22,6 +22,14 @@ $ rails s
 ```
 
 
+## Web solution
+```
+# If seeds where added to the db, you can go to the main page and log in with this test user
+email: test@test.com
+password: testtest
+```
+
+
 ## API usage
 
 ### Log in (returns a token used in headers for future requests)

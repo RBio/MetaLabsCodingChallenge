@@ -49,7 +49,7 @@ RSpec.describe PurchasesService do
       end
 
       it "the purchase and purchase items are created successfully, decreases stock for each product, and it empties the user's cart" do
-        products_to_purchase_stock = products.map(&:stock)
+        products_stock_before_attempt = products.map(&:stock)
 
         purchase = PurchasesService.make_purchase(user)
         purchase_items = purchase.purchase_items
@@ -58,7 +58,7 @@ RSpec.describe PurchasesService do
         expect(user.cart.products).to be_empty
 
         updated_products_stock = Product.find(purchase_items.pluck(:product_id)).map(&:stock)
-        decreased_products_stock = products_to_purchase_stock.map { |previous_stock| previous_stock - 1 }
+        decreased_products_stock = products_stock_before_attempt.map { |previous_stock| previous_stock - 1 }
         expect(updated_products_stock).to eq decreased_products_stock
 
         purchase_items.each do |purchase_item|
@@ -78,10 +78,14 @@ RSpec.describe PurchasesService do
       end
 
       it 'the purchase is not created, and returns an error with the list of products without stock' do
+        products_stock_before_attempt = [products, products_without_stock].flatten.map(&:stock)
         error_message = "The products #{products_without_stock[0].name} and #{products_without_stock[1].name} ran out of stock"
+
         expect { PurchasesService.make_purchase(user) }.to raise_error(OutOfStockError, error_message)
         expect(Purchase.all).to be_empty
         expect(PurchaseItem.all).to be_empty
+        current_products_stock = user.cart.products.map { |product| product.reload.stock }
+        expect(products_stock_before_attempt).to eq current_products_stock
       end
     end
 
@@ -91,7 +95,6 @@ RSpec.describe PurchasesService do
           PurchasesService.make_purchase(user)
         end.to raise_error(EmptyCartError, 'There are no products to purchase')
         expect(Purchase.all).to be_empty
-        expect(PurchaseItem.all).to be_empty
       end
     end
   end

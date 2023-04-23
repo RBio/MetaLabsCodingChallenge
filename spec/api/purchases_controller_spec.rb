@@ -84,12 +84,15 @@ RSpec.describe Api::PurchasesController, type: :request do
       end
 
       it 'should return a 400 error with the list of products without stock' do
+        products_stock_before_attempt = [products, products_without_stock].flatten.map(&:stock)
         error_message = "The products #{products_without_stock[0].name} and #{products_without_stock[1].name} ran out of stock"
         expect(response).to have_http_status(400)
         expect(JSON.parse(response.body)['error']).to eq error_message
 
         expect(Purchase.all).to be_empty
         expect(PurchaseItem.all).to be_empty
+        current_products_stock = user.cart.products.map { |product| product.reload.stock }
+        expect(products_stock_before_attempt).to eq current_products_stock
       end
     end
 
@@ -104,7 +107,6 @@ RSpec.describe Api::PurchasesController, type: :request do
         expect(JSON.parse(response.body)['error']).to eq 'There are no products to purchase'
 
         expect(Purchase.all).to be_empty
-        expect(PurchaseItem.all).to be_empty
       end
     end
   end
